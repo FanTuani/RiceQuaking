@@ -1,0 +1,24 @@
+name: Ricequaking
+version: 1.0
+main: top.ricequakes.ricequaking.Ricequaking
+api-version: 1.16
+
+commands:
+  sl:
+    description: send your location
+    usage: /<command>
+  g:
+    description: enable ghost mode
+    usage: /<command>
+  record:
+    description: save location
+    usage: /<command>
+  r:
+    description: save location
+    usage: /<command>
+  e:
+    description: fast exchange items to ur ender chest
+    usage: /<command>
+  test:
+    description: test
+    usage: /<command>
