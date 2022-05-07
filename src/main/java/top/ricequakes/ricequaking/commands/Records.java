@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import top.ricequakes.ricequaking.Events.TimeTipper;
+import top.ricequakes.ricequaking.Gui.RecordsGui;
 import top.ricequakes.ricequaking.Ricequaking;
 import top.ricequakes.ricequaking.StaticValues;
 
@@ -191,7 +192,7 @@ public class Records implements CommandExecutor, TabExecutor {
             y = (int) player.getLocation().getY();
             z = (int) player.getLocation().getZ();
             Bukkit.broadcastMessage(ChatColor.GOLD + sender.getName() + "的当前坐标为： " + x + " " + y + " " + z);
-        } else if ((command.getName().equalsIgnoreCase("record")
+        } else if ((command.getName().equalsIgnoreCase("record" )
                 || command.getName().equalsIgnoreCase("r")) && sender instanceof Player) {
             if (strings.length == 0) {
                 recordDisplayList((Player) sender);
@@ -213,9 +214,8 @@ public class Records implements CommandExecutor, TabExecutor {
                 sender.sendMessage(ChatColor.RED + "?");
             }
         }
-        if (command.getName().equalsIgnoreCase("test")) {
-            Bukkit.broadcastMessage("test");
-            Bukkit.broadcastMessage(TimeTipper.getTime());
+        if (command.getName().equalsIgnoreCase("rm")) {
+            RecordsGui.open((Player) sender);
         }
         return true;
     }

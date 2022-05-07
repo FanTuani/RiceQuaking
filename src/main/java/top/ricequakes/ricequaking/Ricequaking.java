@@ -16,9 +16,11 @@ import top.ricequakes.ricequaking.commands.GhostMode;
 import top.ricequakes.ricequaking.commands.Records;
 
 public class Ricequaking extends JavaPlugin {
+    public static Ricequaking instance;
 
     @Override
     public void onEnable() {
+        instance = this;
         getLogger().info("Loaded Successfully!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         new Login(this);
         new Die(this);
@@ -28,7 +30,7 @@ public class Ricequaking extends JavaPlugin {
         getCommand("r").setExecutor(new Records(this));
         getCommand("g").setExecutor(new GhostMode(this));
         getCommand("e").setExecutor(new FastExchange2EndChest(this));
-        getCommand("test").setExecutor(new Records(this));
+        getCommand("rm").setExecutor(new Records(this));
         saveDefaultConfig();
         enableRecipes();
     }
