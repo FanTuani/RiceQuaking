@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="RiceQuaking:jar">
-    <output-path>$APPLICATION_HOME_DIR$/Projects/RiceQuaking/lib/plugins</output-path>
-    <root id="archive" name="RiceQuaking.jar">
-      <element id="module-output" name="RiceQuaking" />
-      <element id="extracted-dir" path="$APPLICATION_HOME_DIR$/Projects/RiceQuaking/lib/craftbukkit-1.16.5.jar" path-in-jar="/" />
-    </root>
-  </artifact>
-</component>
