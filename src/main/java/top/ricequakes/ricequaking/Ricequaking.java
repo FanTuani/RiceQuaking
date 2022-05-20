@@ -21,7 +21,7 @@ public class Ricequaking extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        getLogger().info("Loaded Successfully!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        getLogger().info("Loaded Successfully!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         new Login(this);
         new Die(this);
         new MagicControl(this);
