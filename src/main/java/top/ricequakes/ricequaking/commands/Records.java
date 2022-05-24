@@ -8,10 +8,9 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import top.ricequakes.ricequaking.Events.TimeTipper;
 import top.ricequakes.ricequaking.Gui.RecordsGui;
 import top.ricequakes.ricequaking.Ricequaking;
-import top.ricequakes.ricequaking.StaticValues;
+import top.ricequakes.ricequaking.Game;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -129,18 +128,18 @@ public class Records implements CommandExecutor, TabExecutor {
         double y = new Double(destList.get(1).toString());
         double z = new Double(destList.get(2).toString());
         Location destination = new Location(player.getWorld(), x, y, z);
-        if (!StaticValues.isDirecting.contains(player)) {
-            StaticValues.isDirecting.add(player);
+        if (!Game.isDirecting.contains(player)) {
+            Game.isDirecting.add(player);
             player.sendMessage(ChatColor.YELLOW + "directing..");
         } else {
-            StaticValues.isDirecting.remove(player);
+            Game.isDirecting.remove(player);
             player.sendTitle("", "", 0, 1, 0);
             player.sendMessage(ChatColor.YELLOW + "stopped");
         }
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (StaticValues.isDirecting.contains(player)) {
+                if (Game.isDirecting.contains(player)) {
                     destination.setY(player.getLocation().getY());
                     int distance = (int) player.getLocation().distance(destination);
                     player.sendTitle(" ", ChatColor.GREEN + String.valueOf(distance), 0, 60, 0);

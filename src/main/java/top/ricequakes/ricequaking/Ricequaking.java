@@ -10,7 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import top.ricequakes.ricequaking.Events.Die;
 import top.ricequakes.ricequaking.Events.Login;
-import top.ricequakes.ricequaking.Events.MagicControl;
+import top.ricequakes.ricequaking.Events.VillagersTransporter;
 import top.ricequakes.ricequaking.commands.FastExchange2EndChest;
 import top.ricequakes.ricequaking.commands.GhostMode;
 import top.ricequakes.ricequaking.commands.Records;
@@ -24,7 +24,7 @@ public class Ricequaking extends JavaPlugin {
         getLogger().info("Loaded Successfully!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         new Login(this);
         new Die(this);
-        new MagicControl(this);
+        new VillagersTransporter(this);
         getCommand("sl").setExecutor(new Records(this));
         getCommand("record").setExecutor(new Records(this));
         getCommand("r").setExecutor(new Records(this));
@@ -46,7 +46,7 @@ public class Ricequaking extends JavaPlugin {
 
     private void recipeKeepInvClock() {
         ItemStack item = new ItemStack(Material.CLOCK);
-        item.addUnsafeEnchantment(Enchantment.DURABILITY, 10);  //给物品附魔
+        item.addUnsafeEnchantment(Enchantment.DURABILITY, 10);  //附魔
         ItemMeta itemMeta = item.getItemMeta();
         itemMeta.setDisplayName("读盘器");
         item.setItemMeta(itemMeta);

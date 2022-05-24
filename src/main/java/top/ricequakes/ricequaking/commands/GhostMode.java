@@ -9,7 +9,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import top.ricequakes.ricequaking.Ricequaking;
-import top.ricequakes.ricequaking.StaticValues;
+import top.ricequakes.ricequaking.Game;
 
 import java.util.HashMap;
 
@@ -24,7 +24,7 @@ public class GhostMode implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
         if (command.getName().equalsIgnoreCase("g") && sender instanceof Player) {
             Player player = (Player) sender;
-            HashMap<String, Location> hashMap = StaticValues.ghostModeBackLocations;
+            HashMap<String, Location> hashMap = Game.ghostModeBackLocations;
             if (player.getGameMode() == GameMode.SURVIVAL) {
                 hashMap.put(player.getName(), player.getLocation());
                 player.setGameMode(GameMode.SPECTATOR);

@@ -16,7 +16,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import top.ricequakes.ricequaking.Ricequaking;
-import top.ricequakes.ricequaking.StaticValues;
+import top.ricequakes.ricequaking.Game;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class RecordsGui {
 
     public static void open(Player player) {
         int i = 0;
-        for (String name : StaticValues.getPerfectList()) {
+        for (String name : Game.getPerfectList()) {
             ItemStack mapItem = new ItemStack(Material.MAP, 1);
             ItemMeta mapMata = mapItem.getItemMeta();
             mapMata.setDisplayName(name);
