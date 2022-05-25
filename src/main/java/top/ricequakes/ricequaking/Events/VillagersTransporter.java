@@ -1,20 +1,20 @@
 package top.ricequakes.ricequaking.Events;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 import top.ricequakes.ricequaking.Ricequaking;
 
@@ -30,6 +30,30 @@ public class VillagersTransporter implements Listener {
     public VillagersTransporter(Ricequaking plugin) {
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
+    }
+
+    @EventHandler
+    public void onPlayerRightClick(PlayerInteractEvent event) {
+        if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.WOODEN_SWORD) {
+            if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                Player player = event.getPlayer();
+
+                Location location = player.getEyeLocation();
+                Vector direc = player.getLocation().getDirection();
+                location.add(direc);
+
+                RayTraceResult result = player.getWorld().rayTraceEntities(location, direc, 200);
+                if (result != null && result.getHitEntity() != null) {
+                    if (result.getHitEntity().getType() == EntityType.VILLAGER) {
+                        Villager villager = (Villager) result.getHitEntity();
+                        villager.teleport(player.getLocation());
+                        player.sendMessage(ChatColor.YELLOW + "吸！");
+                    } else {
+                        player.sendMessage(ChatColor.GRAY + "未追踪到有效实体！");
+                    }
+                }
+            }
+        }
     }
 
     @EventHandler
@@ -67,6 +91,7 @@ public class VillagersTransporter implements Listener {
                 List<Villager> list = new ArrayList();
                 list.add(villager);
                 transVi.put(player, list);
+                player.sendMessage(ChatColor.YELLOW + "Picked! 正在运输 " + transVi.get(player).size() + " 只村民");
                 new BukkitRunnable() {
                     @Override
                     public void run() { //控制村民位置
@@ -92,9 +117,9 @@ public class VillagersTransporter implements Listener {
                     transVi.get(player).clear();
                 } else { // 否则把该村民列入hashmap
                     transVi.get(player).add(villager);
+                    player.sendMessage(ChatColor.YELLOW + "Picked! 正在运输 " + transVi.get(player).size() + " 只村民");
                 }
             }
-            player.sendMessage(ChatColor.YELLOW + "Picked!");
         }
     }
 
