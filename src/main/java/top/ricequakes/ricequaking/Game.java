@@ -3,7 +3,6 @@ package top.ricequakes.ricequaking;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -14,7 +13,7 @@ public class Game {
     public static Vector<Player> isDirecting = new Vector<>();
 
     public static List<String> getPerfectList() {
-        FileConfiguration config = Ricequaking.instance.getConfig();
+        FileConfiguration config = RiceQuaking.instance.getConfig();
         List<String> list1 = new ArrayList<>();
         List<String> list2 = new ArrayList<>();
         List<String> list3 = new ArrayList<>();

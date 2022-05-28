@@ -7,20 +7,19 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import top.ricequakes.ricequaking.Ricequaking;
+import top.ricequakes.ricequaking.RiceQuaking;
 import top.ricequakes.ricequaking.Game;
 
 import java.util.List;
 
-public class RecordsGui {
+public class RecordsGui implements Listener {
+    private final RiceQuaking plugin;
     public static final Inventory inv;
 
     static {
@@ -39,6 +38,11 @@ public class RecordsGui {
         inv.setItem(45, fireItem);
     }
 
+    public RecordsGui(RiceQuaking plugin) {
+        this.plugin = plugin;
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+    }
+
     public static void open(Player player) {
         int i = 0;
         for (String name : Game.getPerfectList()) {
@@ -48,59 +52,103 @@ public class RecordsGui {
             mapItem.setItemMeta(mapMata);
             inv.setItem(i++, mapItem);
         }
-
         player.openInventory(inv);
-        Bukkit.getPluginManager().registerEvents(new Listener() {
-            @EventHandler
-            public void onClick(InventoryClickEvent event) {
-                event.setCancelled(true);
-                if (event.getCurrentItem() != null) {
-                    switch (event.getCurrentItem().getItemMeta().getDisplayName()) {
-                        case "quit": {
-                            break;
-                        }
-                        case "借个火": {
-                            if (player.getInventory().contains(Material.FIRE_CHARGE)
-                                    || player.getInventory().contains(Material.FLINT_AND_STEEL)) {
-                                player.damage(0.1);
-                                player.sendMessage(ChatColor.RED + "你特么该是缺火？");
-                            } else {
-                                player.getInventory().addItem(new ItemStack(Material.FIRE_CHARGE, 1));
-                                player.sendMessage(ChatColor.GRAY + "在你背包里啦=-= 如果它没有满的话");
-                            }
-                            break;
-                        }
+//        Bukkit.getPluginManager().registerEvents(new Listener() {
+//            @EventHandler
+//            public void onClick(InventoryClickEvent event) {
+//                event.setCancelled(true);
+//                if (event.getCurrentItem() != null) {
+//                    switch (event.getCurrentItem().getItemMeta().getDisplayName()) {
+//                        case "quit": {
+//                            break;
+//                        }
+//                        case "借个火": {
+//                            if (player.getInventory().contains(Material.FIRE_CHARGE)
+//                                    || player.getInventory().contains(Material.FLINT_AND_STEEL)) {
+//                                player.damage(0.1);
+//                                player.sendMessage(ChatColor.RED + "你特么该是缺火？");
+//                            } else {
+//                                player.getInventory().addItem(new ItemStack(Material.FIRE_CHARGE, 1));
+//                                player.sendMessage(ChatColor.GRAY + "在你背包里啦=-= 如果它没有满的话");
+//                            }
+//                            break;
+//                        }
+//                    }
+//                    if (event.getCurrentItem().getType() == Material.MAP) {
+//                        FileConfiguration config = RiceQuaking.instance.getConfig();
+//                        String name = event.getCurrentItem().getItemMeta().getDisplayName();
+//                        List list = config.getList(name);
+//                        double x = new Double(list.get(0).toString());
+//                        double y = new Double(list.get(1).toString());
+//                        double z = new Double(list.get(2).toString());
+//                        if (name.contains("地狱：") || name.contains("地狱:")) {
+//                            player.teleport(new Location(RiceQuaking.instance.getServer().getWorld("world_nether"), x, y, z));
+//                        } else if (name.contains("末地：") || name.contains("末地:")) {
+//                            player.teleport(new Location(RiceQuaking.instance.getServer().getWorld("world_the_end"), x, y, z));
+//                        } else {
+//                            player.teleport(new Location(RiceQuaking.instance.getServer().getWorld("world"), x, y, z));
+//                        }
+//                        player.sendMessage(ChatColor.GOLD + "Teleported to: " + name);
+//                    }
+//                    player.closeInventory();
+//                }
+//            }
+//
+//            @EventHandler
+//            public void onDrag(InventoryDragEvent event) {
+//                event.setCancelled(true);
+//                player.closeInventory();
+//            }
+//
+//            @EventHandler
+//            public void onClose(InventoryCloseEvent event) {
+//                HandlerList.unregisterAll(this);
+//            }
+//        }, RiceQuaking.instance);
+    }
+
+    @EventHandler
+    public void onPlayerInteractRecordGUI(InventoryClickEvent event) {
+        Player player = (Player) event.getWhoClicked();
+        event.setCancelled(true);
+        if (event.getCurrentItem() != null) {
+            switch (event.getCurrentItem().getItemMeta().getDisplayName()) {
+                case "quit": {
+                    break;
+                }
+                case "借个火": {
+                    if (player.getInventory().contains(Material.FIRE_CHARGE)
+                            || player.getInventory().contains(Material.FLINT_AND_STEEL)) {
+                        player.damage(0.1);
+                        player.sendMessage(ChatColor.RED + "你特么该是缺火？");
+                    } else {
+                        player.getInventory().addItem(new ItemStack(Material.FIRE_CHARGE, 1));
+                        player.sendMessage(ChatColor.GRAY + "在你背包里啦=-= 如果它没有满的话");
                     }
-                    if (event.getCurrentItem().getType() == Material.MAP) {
-                        FileConfiguration config = Ricequaking.instance.getConfig();
-                        String name = event.getCurrentItem().getItemMeta().getDisplayName();
-                        List list = config.getList(name);
-                        double x = new Double(list.get(0).toString());
-                        double y = new Double(list.get(1).toString());
-                        double z = new Double(list.get(2).toString());
-                        if (name.contains("地狱：") || name.contains("地狱:")) {
-                            player.teleport(new Location(Ricequaking.instance.getServer().getWorld("world_nether"), x, y, z));
-                        } else if (name.contains("末地：") || name.contains("末地:")) {
-                            player.teleport(new Location(Ricequaking.instance.getServer().getWorld("world_the_end"), x, y, z));
-                        } else {
-                            player.teleport(new Location(Ricequaking.instance.getServer().getWorld("world"), x, y, z));
-                        }
-                        player.sendMessage(ChatColor.GOLD + "Teleported to: " + name);
-                    }
-                    player.closeInventory();
+                    break;
                 }
             }
-
-            @EventHandler
-            public void onDrag(InventoryDragEvent event) {
-                event.setCancelled(true);
-                player.closeInventory();
+            if (event.getCurrentItem().getType() == Material.MAP) {
+                FileConfiguration config = RiceQuaking.instance.getConfig();
+                String name = event.getCurrentItem().getItemMeta().getDisplayName();
+                List list = config.getList(name);
+                double x = new Double(list.get(0).toString());
+                double y = new Double(list.get(1).toString());
+                double z = new Double(list.get(2).toString());
+                if (name.contains("地狱：") || name.contains("地狱:")) {
+                    player.teleport(new Location(RiceQuaking.instance.getServer().getWorld("world_nether"), x, y, z));
+                } else if (name.contains("末地：") || name.contains("末地:")) {
+                    player.teleport(new Location(RiceQuaking.instance.getServer().getWorld("world_the_end"), x, y, z));
+                } else {
+                    player.teleport(new Location(RiceQuaking.instance.getServer().getWorld("world"), x, y, z));
+                }
+                player.sendMessage(ChatColor.GOLD + "Teleported to: " + name);
             }
-
-            @EventHandler
-            public void onClose(InventoryCloseEvent event) {
-                HandlerList.unregisterAll(this);
-            }
-        }, Ricequaking.instance);
+            player.closeInventory();
+        }
+    }
+    @EventHandler
+    public void onPlayerDragInRecordGUI(InventoryDragEvent event) {
+        event.setCancelled(true);
     }
 }

@@ -1,7 +1,6 @@
-package top.ricequakes.ricequaking.Events;
+package top.ricequakes.ricequaking.Features;
 
 import org.bukkit.*;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -16,18 +15,18 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
-import top.ricequakes.ricequaking.Ricequaking;
+import top.ricequakes.ricequaking.RiceQuaking;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class VillagersTransporter implements Listener {
-    public final Ricequaking plugin;
+public class VillagersTransport implements Listener {
+    public final RiceQuaking plugin;
     private static HashMap<Player, List<Villager>> transVi = new HashMap<>();
     private static HashMap<Player, Villager> controlVi = new HashMap<>();
 
-    public VillagersTransporter(Ricequaking plugin) {
+    public VillagersTransport(RiceQuaking plugin) {
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }

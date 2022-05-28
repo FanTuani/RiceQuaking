@@ -1,6 +1,6 @@
-name: Ricequaking
+name: RiceQuaking
 version: 1.01
-main: top.ricequakes.ricequaking.Ricequaking
+main: top.ricequakes.ricequaking.RiceQuaking
 api-version: 1.16
 
 commands:

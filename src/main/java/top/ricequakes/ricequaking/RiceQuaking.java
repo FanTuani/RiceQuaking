@@ -1,6 +1,7 @@
 package top.ricequakes.ricequaking;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -10,21 +11,26 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import top.ricequakes.ricequaking.Events.Die;
 import top.ricequakes.ricequaking.Events.Login;
-import top.ricequakes.ricequaking.Events.VillagersTransporter;
-import top.ricequakes.ricequaking.commands.FastExchange2EndChest;
-import top.ricequakes.ricequaking.commands.GhostMode;
-import top.ricequakes.ricequaking.commands.Records;
+import top.ricequakes.ricequaking.Features.CampfireRestoreHealth;
+import top.ricequakes.ricequaking.Features.VillagersTransport;
+import top.ricequakes.ricequaking.Commands.FastExchange2EndChest;
+import top.ricequakes.ricequaking.Commands.GhostMode;
+import top.ricequakes.ricequaking.Commands.Records;
+import top.ricequakes.ricequaking.Gui.RecordsGui;
 
-public class Ricequaking extends JavaPlugin {
-    public static Ricequaking instance;
+public class RiceQuaking extends JavaPlugin {
+    public static RiceQuaking instance;
 
     @Override
     public void onEnable() {
         instance = this;
-        getLogger().info("Loaded Successfully!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        for (int i = 1; i <= 5; i++)
+            getLogger().info("RiceQuaking was loaded Successfully !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         new Login(this);
         new Die(this);
-        new VillagersTransporter(this);
+        new VillagersTransport(this);
+        new CampfireRestoreHealth(this);
+        new RecordsGui(this);
         getCommand("sl").setExecutor(new Records(this));
         getCommand("record").setExecutor(new Records(this));
         getCommand("r").setExecutor(new Records(this));
@@ -37,6 +43,7 @@ public class Ricequaking extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        Bukkit.broadcastMessage(ChatColor.YELLOW + "[RiceQuaking] Reloading plugins...");
     }
 
     private void enableRecipes() {
